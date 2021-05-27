@@ -17,10 +17,10 @@
 			Inicio de sesión
 		</h5>
 		<form action="sesion.php" method="post" >
-		<input class="controls" type="text" name="username" id="username" value="" placeholder="Usuario">
-		<input class="controls" type="password" name="password" id ="password"  value="" placeholder="Contraseña">
+		<input class="controls" type="text" name="username" id="username" value="" placeholder="Usuario" required="">
+		<input class="controls" type="password" name="password" id ="password"  value="" placeholder="Contraseña" required="">
 		<input class="buttons" type="submit" name="ingresar">
-		<p><a href="#">Registrarse</a></p>
+		<p><a href="formulario_Admin.php">Registrarse</a></p>
 		</form>
 
 	</section>
