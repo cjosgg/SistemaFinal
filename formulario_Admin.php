@@ -19,7 +19,7 @@
         <input type="email" class="controls" name="email" id="email" value="" placeholder="Ingrese su correo electronico" required="">
         <input type="text" class="controls" name="username" id="username" value="" placeholder="Ingrese su nombre de usuario" required="">
 		<input class="controls" type="password" name="password" id ="password"  value="" placeholder="Contraseña" required="">
-		<p><a href="Login_Abel.html">Volver</a></p>
+		<p><a href="Login.html">Volver</a></p>
 		<input class="buttons" type="submit" name="ingresar">
 		</form>
 	</section>
