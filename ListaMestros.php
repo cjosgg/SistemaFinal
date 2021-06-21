@@ -14,7 +14,7 @@ $datos = $conn->query($sql);
 	<title>Listado Administradores </title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    	<link rel="stylesheet" href="Estilos_CSS/Estilos.css">
+    <link rel="stylesheet" href="Estilos_CSS/Estilos.css">
 	<link rel="stylesheet" href="Estilos_CSS/tablaEstilos.css">
 </head>
 <body>
@@ -33,7 +33,7 @@ $datos = $conn->query($sql);
 					
 				</ul>
 			</li>
-			
+			<li><a href="ListaCursos.php"> Cursos </a></li>
 			<li><a href="Login.php">Cerrar sesion</a></li>
 		</ul>
 
