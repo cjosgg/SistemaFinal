@@ -16,15 +16,16 @@ $datos = $conn->query($sql);
 	<title>Listado Alumnos</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="Estilos_CSS/Estilos.css">
+    	<link rel="stylesheet" href="Estilos_CSS/Estilos.css">
+	<link rel="stylesheet" href="Estilos_CSS/tablaEstilos.css">
 </head>
 <body>
-		
+	
 		<ul class="menu_principal">
 			
-			<li><a href="#">Inicio</a></li>
-			<li><a href="ListaAlumnos.php">Alumnos</a></li>
-			<li><a href="ListaMestros.php">Maestros</a></li>
+			<li><a href="menu_Principal.php">Inicio</a></li>
+			<li><a href="#">Alumnos</a></li>
+			<li><a href="ListaMaestros.php">Maestros</a></li>
 			<li><a href="#">Usuarios</a>
 				<ul>
 					
@@ -38,23 +39,25 @@ $datos = $conn->query($sql);
 			<li><a href="Login.php">Cerrar sesion</a></li>
 		</ul>
 
+	
 
-	<table border="1" cellpadding="0" class="tablaAlumnos">
+
+	<table>
 		<caption>Listado de Alumnos</caption>
 		<thead>
 			<tr>
-				<th scope="col"> Id</th>
-				<th scope="col"> Apellido Paterno</th>
-				<th scope="col"> Apellido Materno</th>
-				<th scope="col"> Nombres</th>
-				<th scope="col"> Nombre del curso</th>
-				<th scope="col"> Inicio</th>
-				<th scope="col"> Fin</th>
-				<th scope="col"> Acciones</th>
+				<th> Id</th>
+				<th> Apellido Paterno</th>
+				<th> Apellido Materno</th>
+				<th> Nombres</th>
+				<th> Nombre del curso</th>
+				<th> Inicio</th>
+				<th> Fin</th>
+				<th> Acciones</th>
 				
 			</tr>
 		</thead>
-		<tbody align="center">
+			
 			<?php
 			while ($fila = mysqli_fetch_array($datos)) {
 				
@@ -79,5 +82,6 @@ $datos = $conn->query($sql);
 			?>
 		</tbody>
 	</table>
+	
 </body>
 </html>
