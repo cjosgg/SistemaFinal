@@ -14,15 +14,16 @@ $datos = $conn->query($sql);
 	<title>Listado Administradores </title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="Estilos_CSS/Estilos.css">
+    	<link rel="stylesheet" href="Estilos_CSS/Estilos.css">
+	<link rel="stylesheet" href="Estilos_CSS/tablaEstilos.css">
 </head>
 <body>
 		
 		<ul class="menu_principal">
 			
-			<li><a href="#">Inicio</a></li>
+			<li><a href="menu_Principal.php">Inicio</a></li>
 			<li><a href="ListaAlumnos.php">Alumnos</a></li>
-			<li><a href="ListaMestros.php">Maestros</a></li>
+			<li><a href="#">Maestros</a></li>
 			<li><a href="#">Usuarios</a>
 				<ul>
 					
@@ -37,16 +38,16 @@ $datos = $conn->query($sql);
 		</ul>
 
 
-	<table border="1" cellpadding="0"  class="tablaAlumnos">
-		<caption>Listado de Alumnos usuarios</caption>
+	<table>
+		<caption>Listado de Maestros</caption>
 		<thead>
 			<tr>
-				<th scope="col"> Id</th>
-				<th scope="col"> Apellido Paterno</th>
-				<th scope="col"> Apellido Materno</th>
-				<th scope="col"> Nombres</th>
-				<th scope="col"> Curso que imparte</th>
-				<th scope="col"> Acciones</th>
+				<th> Id</th>
+				<th> Apellido Paterno</th>
+				<th> Apellido Materno</th>
+				<th> Nombres</th>
+				<th> Curso que imparte</th>
+				<th> Acciones</th>
 				
 			</tr>
 		</thead>
