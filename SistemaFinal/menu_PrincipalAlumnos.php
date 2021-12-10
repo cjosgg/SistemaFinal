@@ -1,3 +1,40 @@
+<?php
+session_start();
+$id= $_SESSION['id'];
+$nombre= $_SESSION['nombres'];
+$aPaterno= $_SESSION['ap_paterno'];
+
+
+
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+
+	echo "";
+
+} else {
+	echo'<script type="text/javascript">
+        alert("Esta pagina es solo para usuarios registrados");
+        window.location.href="LoginAlumno.php";
+        </script>';
+   
+
+
+exit;
+}
+
+$now = time();
+
+if($now > $_SESSION['expire']) {
+session_destroy();
+
+echo'<script type="text/javascript">
+        alert("La session ha expirado, Inicie session de nuevo");
+        window.location.href="LoginAlumno.php";
+        </script>';
+
+exit;
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,10 +50,23 @@
 		
 		<ul class="menu_principal">
 			
-			<li><a href="#">Inicio</a></li>
-			<li><a href="#">Historial academico</a></li>
-			<li><a href="#">Cerrar sesion</a></li>
+			<li><a href="menu_PrincipalAlumnos.php">Inicio</a></li>
+			<li><a href="#">Perfil</a>
+			<ul>
+					
+					<li><a href="perfilAl.php">Mis datos</a></li>
+					<li><a href="historialAc.php">Historial Academico</a></li>
+					
+					
+			</ul>
+			</li>
+			<li><a href="Logout.php">Cerrar session</a></li>
+
+			
 		</ul>
+
+		<h1 style="text-align:center">Bienvenid@ : ) <?php echo" $nombre "." $aPaterno ";?>
+		</h1>
 	
 </body>
 </html>

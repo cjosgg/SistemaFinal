@@ -1,10 +1,38 @@
+
 <?php
+session_start();
 include_once('conexion.php');
 
-$sql = "SELECT  id, email, nom_usuario, ap_paterno, ap_materno, nombres  FROM u_alumnos ORDER BY id ASC";
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 
-$datos = $conn->query($sql);
+    $sql = "call listUAlumnos";
+
+    $datos = $conn->query($sql);
+
+} else {
+	echo'<script type="text/javascript">
+	alert("Esta Pagina es solo para usuarios registrados. Inicie session");
+	window.location.href="Login.php";
+	</script>';
+
+
+exit;
+}
+
+$now = time();
+
+if($now > $_SESSION['expire']) {
+session_destroy();
+
+echo'<script type="text/javascript">
+            alert("La session ha expirado, vuelva a iniciar session.");
+            window.location.href="Login.php";
+            </script>';
+
+exit;
+}
 ?>
+
 
 
 <!DOCTYPE html>
@@ -33,7 +61,7 @@ $datos = $conn->query($sql);
 				</ul>
 			</li>
 			<li><a href="ListaCursos.php"> Cursos </a></li>
-			<li><a href="Login.php">Cerrar sesion</a></li>
+			<li><a href="Logout.php">Cerrar sesion</a></li>
 		</ul>
 
 
@@ -48,7 +76,7 @@ $datos = $conn->query($sql);
 				<th> Apellido Materno</th>
 				<th> Nombres</th>
 				
-				<th scope="col"> Acciones</th>
+				<th > Acciones</th>
 				
 			</tr>
 		</thead>
@@ -67,8 +95,8 @@ $datos = $conn->query($sql);
 					echo "<td>".$fila['ap_materno']."</td>";
 					echo "<td>".$fila['nombres']."</td>";
 					echo "<td>  
-				     <a  href='#'> Editar </a>
-				     <a href='#'> Eliminar</a>   
+				     <a  href='editarAlumnos.php?id=".$fila['id']."'> Editar </a>
+				     <a href='eliminarAlumno.php?id=".$fila['id']."'> Eliminar</a>   
 				     </td>";
 
 				echo "<tr>";

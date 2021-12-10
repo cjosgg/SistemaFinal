@@ -1,11 +1,38 @@
 <?php
+session_start();
 include_once('conexion.php');
 
-$sql = "SELECT c.`id`, c.`nombre` AS nombre_curso, um.`ap_paterno`, um.`ap_materno`, um.`nombres` FROM curso c 
-INNER JOIN u_maestros um ON c.`id_maestro` = um.`id` ORDER BY um.`ap_paterno`, um.`ap_materno` ASC";
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 
-$datos = $conn->query($sql);
+    $sql = "CALL listCursos";
+
+    $datos = $conn->query($sql);
+
+} else {
+	echo'<script type="text/javascript">
+	alert("Esta Pagina es solo para usuarios registrados. Inicie session");
+	window.location.href="Login.php";
+	</script>';
+
+
+exit;
+}
+
+$now = time();
+
+if($now > $_SESSION['expire']) {
+session_destroy();
+
+echo'<script type="text/javascript">
+            alert("La session ha expirado, vuelva a iniciar session.");
+            window.location.href="Login.php";
+            </script>';
+
+exit;
+}
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -33,8 +60,8 @@ $datos = $conn->query($sql);
 					
 				</ul>
 			</li>
-			<li><a href="#"> Cursos </a></li>
-			<li><a href="Login.php">Cerrar sesion</a></li>
+			<li><a href="ListaCursos.php"> Cursos </a></li>
+			<li><a href="Logout.php">Cerrar sesion</a></li>
 		</ul>
 
 
@@ -44,9 +71,9 @@ $datos = $conn->query($sql);
 			<tr>
 				<th> Id</th>
 				<th> Nombre del Curso</th>
+				<th> Nombres del Maestro</th>
 				<th> Apellido Paterno</th>
 				<th> Apellido Materno</th>
-				<th> Nombres del Maestro</th>
 				<th> Acciones</th>
 				
 			</tr>
@@ -60,13 +87,14 @@ $datos = $conn->query($sql);
 				echo "<tr>";
 					
 					echo "<td>".$fila['id']."</td>";
-					echo "<td>".$fila['nombre_curso']."</td>";
+					echo "<td>".$fila['nombre']."</td>";
+					echo "<td>".$fila['nombres']."</td>";
 					echo "<td>".$fila['ap_paterno']."</td>";
 					echo "<td>".$fila['ap_materno']."</td>";
-					echo "<td>".$fila['nombres']."</td>";
 					echo "<td>  
-				     <a  href='#'> Editar </a>
-				     <a href='#'> Eliminar</a>   
+					 <a  href='formularioCurso.php'> Agregar Nuevo </a>
+				     <a  href='EditarCurso.php?id=".$fila['id']."'> Editar </a>
+				     <a href='EliminarCurso.php?id=".$fila['id']."'> Eliminar</a>   
 				     </td>";
 
 				echo "<tr>";

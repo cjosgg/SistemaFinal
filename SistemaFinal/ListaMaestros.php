@@ -1,12 +1,36 @@
 <?php
+session_start();
 include_once('conexion.php');
 
-$sql = "SELECT um.`id`, ap_paterno, ap_materno, nombres,c.`nombre` as nombre_curso  FROM u_maestros um 
-INNER JOIN curso c ON um.`id`= c.`id_maestro` ORDER BY id ASC";
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 
-$datos = $conn->query($sql);
+    $sql = "CALL listMaestros()";
+
+    $datos = $conn->query($sql);
+
+} else {
+	echo'<script type="text/javascript">
+	alert("Esta Pagina es solo para usuarios registrados. Inicie session");
+	window.location.href="Login.php";
+	</script>';
+
+
+exit;
+}
+
+$now = time();
+
+if($now > $_SESSION['expire']) {
+session_destroy();
+
+echo'<script type="text/javascript">
+            alert("La session ha expirado, vuelva a iniciar session.");
+            window.location.href="Login.php";
+            </script>';
+
+exit;
+}
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -23,7 +47,7 @@ $datos = $conn->query($sql);
 			
 			<li><a href="menu_Principal.php">Inicio</a></li>
 			<li><a href="ListaAlumnos.php">Alumnos</a></li>
-			<li><a href="#">Maestros</a></li>
+			<li><a href="ListaMaestros.php">Maestros</a></li>
 			<li><a href="#">Usuarios</a>
 				<ul>
 					
@@ -34,7 +58,7 @@ $datos = $conn->query($sql);
 				</ul>
 			</li>
 			<li><a href="ListaCursos.php"> Cursos </a></li>
-			<li><a href="Login.php">Cerrar sesion</a></li>
+			<li><a href="Logout.php">Cerrar sesion</a></li>
 		</ul>
 
 
@@ -47,7 +71,7 @@ $datos = $conn->query($sql);
 				<th> Apellido Materno</th>
 				<th> Nombres</th>
 				<th> Curso que imparte</th>
-				<th> Acciones</th>
+				
 				
 			</tr>
 		</thead>
@@ -64,10 +88,6 @@ $datos = $conn->query($sql);
 					echo "<td>".$fila['ap_materno']."</td>";
 					echo "<td>".$fila['nombres']."</td>";
 					echo "<td>".$fila['nombre_curso']."</td>";
-					echo "<td>  
-				     <a  href='#'> Editar </a>
-				     <a href='#'> Eliminar</a>   
-				     </td>";
 
 				echo "<tr>";
 			}

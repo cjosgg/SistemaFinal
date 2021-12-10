@@ -3,7 +3,7 @@ session_start();
 ?>
 
 <?php
-//conexión a BD y ejecución de un Select con inner join
+//conexión a BD y ejecución de un Select 
 class server
 {
   public  $server;
@@ -23,7 +23,7 @@ class server
           die("Error: " . $conn->connect_error);
     } 
     else {
-          $sql = "SELECT id, nom_usuario, contrasenia, nombres, ap_paterno FROM administrador WHERE nom_usuario = '$this->username'";
+          $sql = "SELECT id, nom_usuario, contrasenia, nombres, ap_paterno FROM u_maestros WHERE nom_usuario = '$this->username'";
                
           $result = $conn->query($sql);
           
@@ -32,18 +32,18 @@ class server
 				$row = $result->fetch_array(MYSQLI_ASSOC);
 				 if ($this->password == $row['contrasenia']) { 
 				
-          $_SESSION['loggedin'] = true;
-          $_SESSION['id'] = $row['id'];
-          $_SESSION['nombres'] = $row['nombres'];
-          $_SESSION['ap_paterno'] = $row['ap_paterno'];
-          $_SESSION['username'] = $this->username;
-          $_SESSION['start'] = time();
-          $_SESSION['expire'] = $_SESSION['start'] + (5 * 60);
-            
-          echo'<script type="text/javascript">
-          alert("usuario y contraseña correctos! Bienvenido");
-          window.location.href="menu_Principal.php";
-          </script>';
+				    $_SESSION['loggedin'] = true;
+                    $_SESSION['id'] = $row['id'];
+                    $_SESSION['nombres'] = $row['nombres'];
+                    $_SESSION['ap_paterno'] = $row['ap_paterno'];
+				    $_SESSION['username'] = $this->username;
+				    $_SESSION['start'] = time();
+				    $_SESSION['expire'] = $_SESSION['start'] + (5 * 60);
+
+            echo'<script type="text/javascript">
+                        alert("usuario y contraseña correctos! Bienvenido");
+                        window.location.href="menu_PrincipalMaestros.php";
+                        </script>';
 				    
 
              
@@ -66,18 +66,18 @@ class server
 				    } 
           }
 				 else
-				 	 {  
-            echo'<script type="text/javascript">
-            alert("Username o Password estan incorrectos, Intente de nuevo");
-            window.location.href="Login.php";
-            </script>';
+				 	 {   
+                        echo'<script type="text/javascript">
+                        alert("El usuario y contraseña son incorrectos, intentelo de nuevo");
+                        window.location.href="LoginMaestros.php";
+                        </script>';
  	               }
              
           }
           else {   
             echo'<script type="text/javascript">
-            alert("Username o Password estan incorrectos, Intente de nuevo");
-            window.location.href="Login.php";
+            alert("El usuario y contraseña son incorrectos, intentelo de nuevo");
+            window.location.href="LoginMaestro.php";
             </script>';
  	          }
     } 

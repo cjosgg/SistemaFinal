@@ -1,13 +1,38 @@
 <?php
+session_start();
 include_once('conexion.php');
 
-$sql = "SELECT ua.`id`,ua.`ap_paterno`,ua.`ap_materno`,ua.`nombres`, c.`nombre` AS nombre_curso, fechaInicio,fechaFin FROM grupo_alumnos ga
-INNER JOIN u_alumnos ua ON ua.`id` = ga.`id_alumno`
-INNER JOIN curso c ON c.`id`= ga.`id_curso`
-INNER JOIN periodo p ON p.`id`= ga.`id_periodo` ORDER BY ua.`ap_paterno`, c.`nombre`";
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 
-$datos = $conn->query($sql);
+    $sql = "CALL listAlumnos";
+
+    $datos = $conn->query($sql);
+
+} else {
+	echo'<script type="text/javascript">
+	alert("Esta Pagina es solo para usuarios registrados.");
+	window.location.href="Login.php";
+	</script>';
+
+
+exit;
+}
+
+$now = time();
+
+if($now > $_SESSION['expire']) {
+session_destroy();
+
+echo'<script type="text/javascript">
+            alert("La session ha expirado, vuelva a iniciar session.");
+            window.location.href="Login.php";
+            </script>';
+
+exit;
+}
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -24,7 +49,7 @@ $datos = $conn->query($sql);
 		<ul class="menu_principal">
 			
 			<li><a href="menu_Principal.php">Inicio</a></li>
-			<li><a href="#">Alumnos</a></li>
+			<li><a href="ListaAlumnos.php">Alumnos</a></li>
 			<li><a href="ListaMaestros.php">Maestros</a></li>
 			<li><a href="#">Usuarios</a>
 				<ul>
@@ -36,7 +61,7 @@ $datos = $conn->query($sql);
 				</ul>
 			</li>
 			<li><a href="ListaCursos.php"> Cursos </a></li>
-			<li><a href="Login.php">Cerrar sesion</a></li>
+			<li><a href="Logout.php">Cerrar sesion</a></li>
 		</ul>
 
 	
@@ -69,12 +94,12 @@ $datos = $conn->query($sql);
 					echo "<td>".$fila['ap_paterno']."</td>";
 					echo "<td>".$fila['ap_materno']."</td>";
 					echo "<td>".$fila['nombres']."</td>";
-					echo "<td>".$fila['nombre_curso']."</td>";
+					echo "<td>".$fila['nombre']."</td>";
 					echo "<td>".$fila['fechaInicio']."</td>";
 					echo "<td>".$fila['fechaFin']."</td>";
 					echo "<td>  
-				     <a  href='#'> Editar </a>
-				     <a href='#'> Eliminar</a>   
+				     <a  href='editarGrupoAl.php?id=".$fila['id']."'> Editar </a>
+				      
 				     </td>";
 
 				echo "<tr>";
